@@ -8,8 +8,10 @@ local config = { silent = true }
 
 -- Ir al archivo keymaps
 
-local PathKeymaps = "C:/Users/tobia/AppData/local/nvim/lua/config/keymaps.lua"
-vim.keymap.set("n", "<leader>ck", string.format)
+local PathKeymaps = string.format("%s/AppData/local/nvim/lua/config/keymaps.lua", os.getenv("USERPROFILE"))
+vim.keymap.set("n", "<leader>ck", string.format(":e %s <CR>", PathKeymaps), {
+  desc = "Open Keymaps",
+})
 
 vim.keymap.set("i", "jk", "<Esc>", config)
 vim.keymap.set("i", "kj", "<Esc>", config)
