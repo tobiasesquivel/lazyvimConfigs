@@ -1,8 +1,11 @@
 -- Keymaps are automatically loaded on the VeryLazy event
--- Default keymaps that are always set: https://github.com/LazyVim/LazyVim/blob/main/lua/lazyvim/config/keymaps.lua
 -- Add any additional keymaps here
+-- Default keymaps that are always set: https://github.com/LazyVim/LazyVim/blob/main/lua/lazyvim/config/keymaps.lua
 
-local terminal = require("snacks").terminal
+Terminal = require("snacks").terminal
+Explorer = require("snacks").explorer
+SnacksPickerExplorer = require("snacks.picker.actions")
+Picker = require("snacks.picker")
 
 local config = { silent = true }
 
@@ -22,8 +25,7 @@ vim.keymap.set("n", "<M-l>", ":bnext<CR>", config)
 vim.keymap.set({ "n", "v" }, "H", "<cmd>normal! 15kzz<CR>", { silent = true, buffer = nil })
 vim.keymap.set({ "n", "v" }, "L", "<cmd>normal! 15jzz<CR>", { silent = true, buffer = nil })
 
--- Normal mode: tab y shift-tab
-vim.keymap.set("n", "<Tab>", ">>", config) -- indentar línea actual
+-- Normal mode: tab y shift-tavim.keymap.set("n", "<Tab>", ">>", config) -- indentar línea actual
 vim.keymap.set("n", "<S-Tab>", "<<", config) -- desindentar línea actual
 
 -- Visual mode: tab y shift-tab para bloques
@@ -35,7 +37,17 @@ vim.keymap.set("v", "<S-Tab>", "<gv", config) -- <gv mantiene la selección
 vim.keymap.set("t", "jk", "<C-\\><C-n>")
 vim.keymap.set("t", "kj", "<C-\\><C-n>")
 
-vim.keymap.set("n", "<C-t>", terminal.toggle)
+-- TODO: Hacer funcionar la terminal con snacks y podes cambiarle el nombre a los archivos en el explorador
+
+function AlternarTerminal()
+  vim.opt.shellslash = false
+  Terminal.toggle()
+  vim.opt.shellslash = true
+end
+
+vim.keymap.set("n", "<C-t>", AlternarTerminal)
+
+vim.keymap.set("n", "<M-d>", vim.diagnostic.open_float)
 -- Map para abrir la consola en el direcotorio del buffer actual
 -- vim.keymap.set("n", "<C-;>", function()
 --   local Pwd = vim.fn.expand("%:p:h")
